@@ -1,0 +1,55 @@
+sudo apt-get update
+
+sudo apt-get install ca-certificates  git curl wget  vim
+
+sudo apt-get remove vim-common
+
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+vim ~/.zshrc
+DEFAULT_USER=$USER
+zsh-syntax-highlighting zsh-autosuggestions
+
+sudo apt-get install samba samba-common-bin
+sudo vim /etc/samba/smb.conf
+[raspi_share]
+comment = raspi files dir
+path = /home/pi/samba
+valid users = pi
+browseable = yes
+public = yes
+read only = no
+writeable = yes
+create mask = 0777
+directory mask = 0777
+
+sudo smbpasswd -a pi
+sudo systemctl restart smbd
+
+#!/bin/bash
+host_ip=$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " ")
+export all_proxy='192.168.2.100:7890'
+
+npm install -g browser-sync
+browser-sync start --server --files "**"
+
+deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+
+deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+
+deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+
+deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+
+deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
